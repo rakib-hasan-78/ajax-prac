@@ -71,9 +71,9 @@ getRequestWithPromise('https://fakestoreapi.com/products')
     .then((reponse) => {
         let output = '';
         reponse.forEach(data=>{
-            const {rate = 'N/A', count = 'N/A'} = data.reponse || {};
+            const {rate , count} = data.rating;
             output+=`
-                <div class="col col-xl-4 col-md-3">
+                <div class="col">
                     <div class="card" style="width: 18rem;">
                         <img src="${data.image}" class="card-img-top" alt="${data.title}">
                         <div class="card-body">
@@ -96,28 +96,49 @@ getRequestWithPromise('https://fakestoreapi.com/products')
     })
     .catch(error => console.error("Promise rejection error:", error));
 
-/* 
+    const delay = s=> new Promise(resol=> setTimeout(resol ,s*1000));
+    delay(2)
+        .then(()=>console.log('2 sec delay'))
+    delay(3)
+        .then(()=>console.log('3 sec delay'))
+    delay(4)
+        .then(()=>console.log('4 sec delay'))
+    delay(5)
+        .then(()=>console.log('5 sec delay'))
 
-  {
-    "id": 1,
-    "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-    "price": 109.95,
-    "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-    "category": "men's clothing",
-    "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-    "rating": {
-      "rate": 3.9,
-      "count": 120
-    }
-  },
+/* async task handle  using fetch API */
+function getRequestWithFetch(url) {
+    fetch(url)
+    .then(response=>response.json())
+    .then(response=>{
+        let output =''
+        response.map(data=>{
+            output+= `
 
-    <div class="card" style="width: 18rem;">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-    </div>
- */
+                <div class="col col-xl-4 my-2">
+                    <div class="card w-100" style="width: 18rem;">
+                        <img src="${data.avatar}" class="card-img-top" alt="${data.name}">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Name : ${data.name}</h5>
+                            <p class="card-text text-center">Email: ${data.email}</p>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <span>User ID: $${data.id}</span>
+                                <span>User Role: ${data.role}</span>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <span>Location: ${data.creationAt}</span>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <span>User Password: ${data.password}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+            `
+        });
+        document.getElementById('user-data').innerHTML = output;
+    })
+}
+
+getRequestWithFetch('https://api.escuelajs.co/api/v1/users');
