@@ -41,49 +41,57 @@ xmlGet('http://localhost:3000/users', (error, resp)=>{
         document.getElementById('data-info').innerHTML=output;
     }
 });
+
 /* post now */
 
-function xmlGetPost(url, data, cb) {
+
+const newData = {
+
+    "id": 9,
+    "person": "sakib Hasan",
+    "profession": "Digital Marketing",
+    "nationality": "Bangladeshi",
+    "height": 168,
+    "age": 33,
+    "sex": "Male",
+    "address": "25 Tech Park Rd, Khulna",
+    "country": "Bangladesh",
+    "contact_info": {
+        "facebook": "facebook.com/sakib",
+        "instagram": "instagram.com/ra",
+        "x": "x.com/ra",
+        "mobile_no": "+880-171-3954321"
+    }
+}
+function dataPostRequest(url, data, cb) {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', url);
+    xhr.open('POST',url);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status === 201) {
-                let response = JSON.parse(xhr.responseText);
-                cb(null , response);
+                let resolve = JSON.parse(xhr.response);
+                cb(null , resolve)
             } else {
-                cb(xhr.status)
+                cb(`Error: ${xhr.status}`)
             }
         }
     }
     xhr.send(JSON.stringify(data));
 }
-const newData = {
 
-    "id": 8,
-    "person": "Rakib Hasan",
-    "profession": "Software Engineer",
-    "nationality": "Bangladeshi",
-    "height": 176,
-    "age": 30,
-    "sex": "Male",
-    "address": "25 Tech Park Rd, Dhaka",
-    "country": "Bangladesh",
-    "contact_info": {
-        "facebook": "facebook.com/rakib",
-        "instagram": "instagram.com/ra",
-        "x": "x.com/ra",
-        "mobile_no": "+880-171-7954321"
-    }
-}
-xmlGetPost('#', newData ,(err, data)=>{
-    if(err) {
-        console.log('ERROR: Issue Occured!')
-    } else {
-        const {facebook , instagram,  x ,  mobile_no} = data.contact_info;
-        let output = '';
-         output=`
+/* post button */
+const dataPostBtn = document.getElementById('btn-post');
+dataPostBtn.addEventListener('click', (e)=>{
+    e.preventDefault();
+
+    dataPostRequest('http://localhost:3000/users', newData, (error, response)=>{
+        if (error) {
+            console.log('Error : Error Occured')
+        } else {
+            const {facebook , instagram,  x ,  mobile_no} = data.contact_info;
+            let output = '';
+            output = `
                 <ol>
                 <li>ID: ${data.id}</li>
                 <li>Name: ${data.person}</li>
@@ -97,10 +105,74 @@ xmlGetPost('#', newData ,(err, data)=>{
                 <li>Name: Facebook : ${facebook}, Instagram: ${instagram}, X: ${x}, Mobile No: ${mobile_no}</li>
                 </ol>
             `
-            document.getElementById('data-info').innerHTML="";
-    }
-});
+            document.getElementById('data-info').innerHTML=output;
+        }
+    })
+})
 
+/* PUT request */
+function xmlPutRequest(url, data, cb) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('PUT', url);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                let response = JSON.parse(xhr.responseText);
+                cb(null, response);
+            } else {
+                cb(`ERROR: ${xhr.status}`);
+            }
+        }
+    }
+    xhr.send(JSON.stringify(data));
+}
+const editData = {
+    "id": 2,
+    "person": "randy keith orton",
+    "profession": "Wrestler",
+    "nationality": "USA",
+    "height": 186,
+    "age": 43,
+    "sex": "Male",
+    "address": "25 Tech Park Rd, Khulna",
+    "country": "USA",
+    "contact_info": {
+        "facebook": "facebook.com/rko",
+        "instagram": "instagram.com/rko",
+        "x": "x.com/rko",
+        "mobile_no": "111-171-656554"
+    }
+}
+
+const editBtn = document.getElementById('btn-update');
+editBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    xmlPutRequest('http://localhost:3000/users/2', editData, (error, response)=>{
+        if (error) {
+            console.log(error.message);
+        } else {
+            const {facebook , instagram,  x ,  mobile_no} = data.contact_info;
+            let output = '';
+            output = `
+                <ol>
+                <li>ID: ${data.id}</li>
+                <li>Name: ${data.person}</li>
+                <li>Age: ${data.age}</li>
+                <li>Gender: ${data.sex}</li>
+                <li>Height: ${data.height}</li>
+                <li>Address: ${data.address}</li>
+                <li>Nationality: ${data.nationality}</li>
+                <li>Profession: ${data.profession}</li>
+                <li>Country: ${data.country}</li>
+                <li>Name: Facebook : ${facebook}, Instagram: ${instagram}, X: ${x}, Mobile No: ${mobile_no}</li>
+                </ol>
+            `
+            document.getElementById('data-info').innerHTML=output;
+        }
+    })
+    
+})
 
 /* asyn with promise   */
 
