@@ -69,23 +69,6 @@
       }
     },
     {
-      "id": "5",
-      "person": "Liu Wei",
-      "profession": "Chef",
-      "nationality": "Chinese",
-      "height": 165,
-      "age": 29,
-      "sex": "Male",
-      "address": "12 Lotus Blvd, Beijing",
-      "country": "China",
-      "contact_info": {
-        "facebook": "facebook.com/liu.wei",
-        "instagram": "instagram.com/liu.wei",
-        "x": "x.com/liu.wei",
-        "mobile_no": "+86-10-87654321"
-      }
-    },
-    {
       "id": "6",
       "person": "Arif Rahman",
       "profession": "Military Professional",
@@ -120,7 +103,7 @@
       }
     },
     {
-      "id": 8,
+      "id": "8",
       "person": "Rakib Hasan",
       "profession": "Software Engineer",
       "nationality": "Bangladeshi",
@@ -134,23 +117,6 @@
         "instagram": "instagram.com/ra",
         "x": "x.com/ra",
         "mobile_no": "+880-171-7954321"
-      }
-    },
-    {
-      "id": 9,
-      "person": "sakib Hasan",
-      "profession": "Digital Marketing",
-      "nationality": "Bangladeshi",
-      "height": 168,
-      "age": 33,
-      "sex": "Male",
-      "address": "25 Tech Park Rd, Khulna",
-      "country": "Bangladesh",
-      "contact_info": {
-        "facebook": "facebook.com/sakib",
-        "instagram": "instagram.com/ra",
-        "x": "x.com/ra",
-        "mobile_no": "+880-171-3954321"
       }
     }
   ]

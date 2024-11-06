@@ -173,7 +173,33 @@ editBtn.addEventListener('click', (e) => {
     })
     
 })
-
+/* xml delete request---> */
+function xmlDeleteRequest(url, id, cb) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('DELETE',`${url}/${id}`);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                cb(null, `Deleted data ID ${id} successfully !`)
+            } else {
+                cb(`ERROR: Data not availabe \n ${xhr.statusText}`)
+            }
+        }
+    }
+    xhr.send();
+}
+const deleteRequest = document.getElementById('btn-delete');
+deleteRequest.addEventListener('click', (e) => {
+    e.preventDefault();
+    const userID = 9;
+    xmlDeleteRequest('http://localhost:3000/users', userID, (error , response)=>{
+        if (error) {
+            console.log(error)
+        } else {
+            ocument.getElementById('data-info').innerHTML=response; 
+        }
+    })
+})
 /* asyn with promise   */
 
 /* function getRequestWithPromise(url) {
